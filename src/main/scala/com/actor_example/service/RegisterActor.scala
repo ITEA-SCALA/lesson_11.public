@@ -15,8 +15,8 @@ class RegisterActor extends Actor {
   val logActor = context.actorSelection("/user/logActor")
 
   override def receive: Receive = {
-    case msg : Registration =>
-      logActor ! "Registering user "+msg.id
+    case msg: Registration =>
+      logActor ! "Registering user " + msg.id
 
       // Loading the current users from file
       val data = FileUtil.loadUsersFromFile()

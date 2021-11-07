@@ -10,8 +10,7 @@ import com.actor_example.dao.FileUtil
 class SenderActor extends Actor {
 
   override def receive: Receive = {
-    case msg : Envelope =>
+    case msg: Envelope =>
         FileUtil.appendMessageToFile(msg)
   }
-
 }

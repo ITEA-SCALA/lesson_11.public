@@ -83,7 +83,7 @@ class HttpActor extends Actor {
               // Если AuthenticateActor возвращает OpSuccess, значит, все в порядке, и мы печатаем сообщение.
               case res : OpSuccess => complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
               // Если AuthenticateActor возвращает OpFailure, значит, что-то не в порядке и тогда мы печатаем сообщение.
-              case res : OpFailure => complete(StatusCodes.BadRequest,HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
+              case res : OpFailure => complete(StatusCodes.BadRequest, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
             }
           }
         }
