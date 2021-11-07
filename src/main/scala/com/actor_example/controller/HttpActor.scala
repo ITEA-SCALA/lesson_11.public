@@ -47,6 +47,15 @@ class HttpActor extends Actor {
   var http: HttpExt = null
   var binding: Future[ServerBinding] = null
 
+  /*
+   * Для реализации трейда 'Actor' нужно заимплементировать только один метод 'receive'
+   * 'receive' - означает что мы достали ожидающее сообщение из почтового ящика и будем его обрабатывать
+   * тип ответа 'Receive' - это PartialFunction (частичная функция)
+   *
+   * 1. Функция которая возвращает пустой тип 'Any => Unit' (void) - это side-еффект
+   *    И считается хорошо-бы его обернуть во что-нибудь, например Future[Unit] или IO[Unit] или Task[Unit]
+   * 2. тип 'Any => Unit' (Any) - это может быть все что угодно...
+   */
   override def receive: Receive = {
     // Если получена команда `StartWebServerCommand`, тогда запустить веб-сервер.
     case StartWebServerCommand =>

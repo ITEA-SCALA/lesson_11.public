@@ -6,13 +6,13 @@ scalaVersion := "2.13.6"
 val akkaVersion = "2.5.23"
 val akkaHttpVersion = "10.1.8"
 val monocleVersion = "3.0.0"
-val setLog4jDebug = sys.props("log4j2.debug") = "true"
+//val setLog4jDebug = sys.props("log4j2.debug") = "true"
 
 libraryDependencies ++= Seq(
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
   "org.slf4j" % "slf4j-api" % "1.7.30",
   "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.13.3",
-  "ch.qos.logback" % "logback-classic" % "1.0.0" % "runtime",
+  "ch.qos.logback" % "logback-classic" % "1.2.6",
 
   "com.typesafe" % "config" % "1.4.1",
   "com.beachape" %% "enumeratum" % "1.7.0",
