@@ -1,7 +1,5 @@
 # Effective API Development for Scala/Akka based microservices
 
-* `Tutorial` https://medium.com/@simone.pezzano/effective-api-development-for-scala-akka-based-microservices-a486c4875108
-* `Repo` https://github.com/theirish81/akka-http-example
 * `SBT` **(** RU **)** [sbt-ru.pdf](sbt-ru.pdf)
 * `Проектирование Сервисного Слоя и Логики Приложения` https://emacsway.github.io/ru/service-layer
   * `Могут ли Akka Actors заменить сервисный слой?`: https://stackoverflow.com/questions/23276623/can-akka-actors-replace-service-layer
