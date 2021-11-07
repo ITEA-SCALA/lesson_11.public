@@ -1,0 +1,4 @@
+package com.actor_example.dist
+
+object StartWebServerCommand
+object StopWebServerCommand
