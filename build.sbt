@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
 
   "io.bfil" %% "automapper" % "0.7.0",
 
+  // com.typesafe.akka  (для старой/классической akka)
   "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
