@@ -79,11 +79,11 @@ class HttpActor extends Actor {
         post {
           entity(as[Envelope]) { envelope =>
             // On success, пересылает конверт to the authenticateActor и ждите его вердикта.
-            onSuccess(authenticateActor ? envelope) { // TODO: implicit value for parameter timeout: akka.util.Timeout
+            onSuccess(authenticateActor ? envelope) { // TODO: implicit value for parameter timeout: akka.util.Timeout // алиас-метод authenticateActor.?(envelope) вернет нам результат опроса актера...
               // Если AuthenticateActor возвращает OpSuccess, значит, все в порядке, и мы печатаем сообщение.
-              case res : OpSuccess => complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
+              case res: OpSuccess => complete(StatusCodes.OK, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
               // Если AuthenticateActor возвращает OpFailure, значит, что-то не в порядке и тогда мы печатаем сообщение.
-              case res : OpFailure => complete(StatusCodes.BadRequest, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
+              case res: OpFailure => complete(StatusCodes.BadRequest, HttpEntity(ContentTypes.`application/json`, res.toJson.prettyPrint))
             }
           }
         }
