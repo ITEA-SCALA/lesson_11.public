@@ -1,8 +1,9 @@
 package com.actor_example.service
 
-import akka.actor.Actor
+import akka.actor.{Actor, Props}
+import com.actor_example.service.PingActor.{HelloActor, IntegerActor, TellCounter}
 
-class PingActor extends Actor {
+class PingActor(startFrom: Int) extends Actor {
 
 //  private var counter = 0
 
@@ -21,7 +22,7 @@ class PingActor extends Actor {
 //      println(s"Got $i integer")
 //  }
 
-  override def receive: Receive = printer(0)
+  override def receive: Receive = printer(startFrom)
 
 //  def printer(): Receive = {
 //    case "untell" =>
@@ -31,13 +32,24 @@ class PingActor extends Actor {
 //      println(s"Counter $str")
 //  }
 
+//  def printer(counter: Int): Receive = {
+//    case "tell counter" =>
+//      sender() ! s"counter is $counter" // отправить сообщение обратно отправителю
+//    case str: String =>
+//      context.become(printer(counter + 1))
+//      println(s"Counter $str")
+//    case i: Int =>
+//      context.become(printer(counter + 1))
+//      println(s"Got $i integer")
+//  }
+
   def printer(counter: Int): Receive = {
-    case "tell counter" =>
+    case TellCounter =>
       sender() ! s"counter is $counter" // отправить сообщение обратно отправителю
-    case str: String =>
+    case HelloActor(str) =>
       context.become(printer(counter + 1))
       println(s"Counter $str")
-    case i: Int =>
+    case IntegerActor(i) =>
       context.become(printer(counter + 1))
       println(s"Got $i integer")
   }
@@ -71,9 +83,9 @@ class PingActor extends Actor {
    *    pingActor.tell( msg="Anton", ActorRef.noSender )
    * другой способ (алиас) передать актеру сообщение:
    *    pingActor.!( message="Anton" )
-   *    pingActor ! "Anton"
+   *    pingActor ! "Anton"     pingActor ! HelloActor("Anton")
    *    // pingActor ! SomeMessage()
-   *    pingActor ! "tell counter"
+   *    pingActor ! "tell counter"       pingActor ! TellCounter
    *
    * Все что было отправлено в порядке - все в том же порядке придет актер
    * (порядок передаваемых актеру сообщений перемешаться не может )
@@ -92,7 +104,30 @@ class PingActor extends Actor {
    *   val futureAny: Future[Any] = pingActor ? "tell counter" // здесь нам вернулся Future[Any]
    * но теперь здесь уже другая проблема - как узнать что такое Any? как узнать что этот актер вообще вернул - и это проблема которую решает actor-typed ?
    *   futureAny.map(println(_))
+   * более чем в контролерах этот Ask-паттерн спрашивать нельзя
+   *
+   *    pingActor.forward( msg="Anton" )(implicit context: ActorContext)
+   * метод 'forward' - он работает как 'tell', но только еще имплисивно передает параметр sender-а
+   * в итоге один актер может передать 1, потом 2, потом 3, потом 4, потом 5 актеру параметр. А в 5 актере будет вычислен результат и обратно отправлен 1-актеру...
+   * Все эти вычисления: tell, forward - являются асинхронными
    *
    * 01:53:00 / 03:29:00
+   *
    */
+}
+
+/*
+ * Обычно в коде такой актер используют через класс-компаньйон
+ * А уже где-то в методе main использовать вот так использовать вызов для создания актера
+ *   val pingActor: PingActor = system.actorOf( PingActor.props(startFrom=42), name="pingActor" )
+ */
+object PingActor {
+
+  // считается хорошая практика предъявить отдельно  (02:13:00 / 03:29:00)
+  sealed trait PingActorEvent
+  case object TellCounter extends PingActorEvent
+  case class HelloActor(name: String) extends PingActorEvent
+  case class IntegerActor(i: Int) extends PingActorEvent
+
+  def props(startFrom: Int = 0): Props = Props(new PingActor(startFrom))
 }

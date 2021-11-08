@@ -122,3 +122,5 @@ Fri Oct 22 14:44:23 EEST 2021) Message from 12 refused
 [Ссылка на запись 11 занятия](https://us02web.zoom.us/rec/share/Eppaa_8w4RNhLcT-NWyOZLksii_6d9mw0W2F7iW9ryFA1dRVb7z5q16P-l768A_k.LAwZy0f0Brak_cuB)
 
 **(** [https://snipboard.io](https://snipboard.io) **)**
+
+* **(** `Ctrl` + `Alt` + `Shift` + `+` **)** подсветить `implicit` параметры
